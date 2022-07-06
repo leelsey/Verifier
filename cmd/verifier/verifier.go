@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto"
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -64,7 +65,6 @@ func md5Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := md5.New()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -78,7 +78,6 @@ func sha1Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha1.New()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -92,7 +91,6 @@ func sha224Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha256.New224()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -106,7 +104,6 @@ func sha256Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha256.New()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -120,7 +117,6 @@ func sha384Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha512.New384()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -134,7 +130,6 @@ func sha512Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha512.New()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -148,7 +143,6 @@ func sha512224Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha512.New512_224()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -162,7 +156,6 @@ func sha512256Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer fileLoc.Close()
 	checkSum := sha512.New512_256()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
@@ -172,19 +165,55 @@ func sha512256Checker(absolutePath string) string {
 }
 
 func sha3224Checker(absolutePath string) string {
-	return wrongUsage
+	fileLoc, err := os.Open(absolutePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	checkSum := crypto.SHA3_224.New()
+	if _, err := io.Copy(checkSum, fileLoc); err != nil {
+		log.Fatal(err)
+	}
+	sumValue := fmt.Sprintf("%x", checkSum.Sum(nil))
+	return sumValue
 }
 
 func sha3256Checker(absolutePath string) string {
-	return wrongUsage
+	fileLoc, err := os.Open(absolutePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	checkSum := crypto.SHA3_256.New()
+	if _, err := io.Copy(checkSum, fileLoc); err != nil {
+		log.Fatal(err)
+	}
+	sumValue := fmt.Sprintf("%x", checkSum.Sum(nil))
+	return sumValue
 }
 
 func sha3384Checker(absolutePath string) string {
-	return wrongUsage
+	fileLoc, err := os.Open(absolutePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	checkSum := crypto.SHA3_384.New()
+	if _, err := io.Copy(checkSum, fileLoc); err != nil {
+		log.Fatal(err)
+	}
+	sumValue := fmt.Sprintf("%x", checkSum.Sum(nil))
+	return sumValue
 }
 
 func sha3512Checker(absolutePath string) string {
-	return wrongUsage
+	fileLoc, err := os.Open(absolutePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	checkSum := crypto.SHA3_512.New()
+	if _, err := io.Copy(checkSum, fileLoc); err != nil {
+		log.Fatal(err)
+	}
+	sumValue := fmt.Sprintf("%x", checkSum.Sum(nil))
+	return sumValue
 }
 
 func md5MainAct() {
