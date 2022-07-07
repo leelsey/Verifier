@@ -996,98 +996,101 @@ func sha3512MainAct() {
 }
 
 func main() {
-	ver_Opt := flag.NewFlagSet("version", flag.ExitOnError)
-	md5_Opt := flag.NewFlagSet("md5", flag.ExitOnError)
-	sha1_Opt := flag.NewFlagSet("sha1", flag.ExitOnError)
-	sha2_224_Opt := flag.NewFlagSet("sha224", flag.ExitOnError)
-	sha2_256_Opt := flag.NewFlagSet("sha256", flag.ExitOnError)
-	sha2_384_Opt := flag.NewFlagSet("sha384", flag.ExitOnError)
-	sha2_512_Opt := flag.NewFlagSet("sha512", flag.ExitOnError)
-	sha2_512224_Opt := flag.NewFlagSet("sha512224", flag.ExitOnError)
-	sha2_512256_Opt := flag.NewFlagSet("sha512256", flag.ExitOnError)
-	sha3_224_Opt := flag.NewFlagSet("sha3224", flag.ExitOnError)
-	sha3_256_Opt := flag.NewFlagSet("sha3256", flag.ExitOnError)
-	sha3_384_Opt := flag.NewFlagSet("sha3384", flag.ExitOnError)
-	sha3_512_Opt := flag.NewFlagSet("sha3512", flag.ExitOnError)
-	test_Opt := flag.NewFlagSet("test", flag.ExitOnError)
+	verOpt := flag.NewFlagSet("version", flag.ExitOnError)
+	md5Opt := flag.NewFlagSet("md5", flag.ExitOnError)
+	sha1Opt := flag.NewFlagSet("sha1", flag.ExitOnError)
+	sha224Opt := flag.NewFlagSet("sha224", flag.ExitOnError)
+	sha256Opt := flag.NewFlagSet("sha256", flag.ExitOnError)
+	sha384Opt := flag.NewFlagSet("sha384", flag.ExitOnError)
+	sha512Opt := flag.NewFlagSet("sha512", flag.ExitOnError)
+	sha512224Opt := flag.NewFlagSet("sha512224", flag.ExitOnError)
+	sha512256Opt := flag.NewFlagSet("sha512256", flag.ExitOnError)
+	sha3224Opt := flag.NewFlagSet("sha3224", flag.ExitOnError)
+	sha3256Opt := flag.NewFlagSet("sha3256", flag.ExitOnError)
+	sha3384Opt := flag.NewFlagSet("sha3384", flag.ExitOnError)
+	sha3512Opt := flag.NewFlagSet("sha3512", flag.ExitOnError)
 	if len(os.Args) == 1 {
 		fmt.Println(wrongUsage)
 	} else {
 		switch os.Args[1] {
 		case "version", "Version", "ver", "Ver", "v", "V", "-v", "-ver", "-version", "--v", "--Ver", "--Version":
-			ver_Opt.Parse(os.Args[1:])
+			err := verOpt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			fmt.Println(lstdot + "Version: " + appver)
 		case "md5", "MD5", "5":
-			md5_Opt.Parse(os.Args[1:])
+			err := md5Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			md5MainAct()
 		case "sha1", "sha", "SHA1", "SHA", "1":
-			sha1_Opt.Parse(os.Args[1:])
+			err := sha1Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha1MainAct()
 		case "sha224", "SHA224", "224":
-			sha2_224_Opt.Parse(os.Args[1:])
+			err := sha224Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha224MainAct()
 		case "sha256", "SHA256", "256":
-			sha2_256_Opt.Parse(os.Args[1:])
+			err := sha256Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha256MainAct()
 		case "sha384", "SHA384", "384":
-			sha2_384_Opt.Parse(os.Args[1:])
+			err := sha384Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha384MainAct()
 		case "sha512", "SHA512", "512":
-			sha2_512_Opt.Parse(os.Args[1:])
+			err := sha512Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha512MainAct()
 		case "sha512224", "sha512/224", "SHA512224", "SHA512/224", "512224", "512/224":
-			sha2_512224_Opt.Parse(os.Args[1:])
+			err := sha512224Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha512224MainAct()
 		case "sha512256", "sha512/256", "SHA512256", "SHA512/256", "512256", "512/256":
-			sha2_512256_Opt.Parse(os.Args[1:])
+			err := sha512256Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha512256MainAct()
 		case "sha3224", "sha3-224", "SHA3224", "SHA3-224", "3224", "3-224":
-			sha3_224_Opt.Parse(os.Args[1:])
+			err := sha3224Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha3224MainAct()
 		case "sha3256", "sha3-256", "SHA3256", "SHA3-256", "3256", "3-256":
-			sha3_256_Opt.Parse(os.Args[1:])
+			err := sha3256Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha3256MainAct()
 		case "sha3384", "sha3-384", "SHA3384", "SHA3-384", "3384", "3-384":
-			sha3_384_Opt.Parse(os.Args[1:])
+			err := sha3384Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
+			}
 			sha3384MainAct()
 		case "sha3512", "sha3-512", "SHA3512", "SHA3-512", "3512", "3-512":
-			sha3_512_Opt.Parse(os.Args[1:])
-			sha3512MainAct()
-		case "test":
-			test_Opt.Parse(os.Args[1:])
-			filePath := args[2]
-			if len(os.Args) == 3 {
-				if filePath[0] == '/' {
-					absolutePath := filePath
-					//fmt.Println(lstsha3512, sha3512Checker(absolutePath))
-					fmt.Println(fileExists(absolutePath))
-				} else if filePath[0] == '~' {
-					absolutePath := homeDir() + filePath[2:]
-					fmt.Println(lstsha3512, sha3512Checker(absolutePath))
-				} else {
-					absolutePath := workingDir() + filePath
-					fmt.Println(lstsha3512, sha3512Checker(absolutePath))
-				}
-			} else if len(os.Args) == 4 {
-				if filePath[0] == '/' {
-					absolutePath := filePath
-					sumValue := sha3512Checker(absolutePath)
-					fmt.Println(lstsha3512, sumValue)
-					Verifer(sumValue)
-				} else if filePath[0] == '~' {
-					absolutePath := homeDir() + filePath[2:]
-					sumValue := sha3512Checker(absolutePath)
-					fmt.Println(lstsha3512, sumValue)
-					Verifer(sumValue)
-				} else {
-					absolutePath := workingDir() + filePath
-					sumValue := sha3512Checker(absolutePath)
-					fmt.Println(lstsha3512, sumValue)
-					Verifer(sumValue)
-				}
-			} else {
-				fmt.Println(wrongUsage)
+			err := sha3512Opt.Parse(os.Args[1:])
+			if err != nil {
+				return
 			}
+			sha3512MainAct()
 		default:
 			fmt.Println(wrongUsage)
 		}
