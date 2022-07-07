@@ -20,6 +20,7 @@ var (
 	wrongUsage = lstdot + "Usage: verifier <command> <file_path> <verify_code>.\n" +
 		lstdot + "It can use in <command> that one of Version, MD5, SHA1, " +
 		"SHA224, SHA256, SHA384, SHA512, SHA512/224, SHA512/256, SHA3-224, SHA3-256, SHA3-384, SHA-512."
+	wrongPath    = lstdot + "Sorry, can't find the file or this is a directory"
 	lstverify    = lstdot + "Verify: "
 	lstmd5       = lstdot + "MD5:"
 	lstsha1      = lstdot + "SHA1:"
@@ -49,6 +50,14 @@ func workingDir() string {
 		log.Fatal(err)
 	}
 	return pwdir + "/"
+}
+
+func fileExists(absolutePath string) bool {
+	info, err := os.Stat(absolutePath)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
 
 func Verifer(sumValue string) {
@@ -221,27 +230,57 @@ func md5MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstmd5, md5Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, md5Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstmd5, md5Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, md5Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstmd5, md5Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, md5Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			sumValue := md5Checker(absolutePath)
-			fmt.Println(lstmd5, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := md5Checker(absolutePath)
+				fmt.Println(lstmd5, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := md5Checker(absolutePath)
+				fmt.Println(lstmd5, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := md5Checker(absolutePath)
 			fmt.Println(lstmd5, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
+			if fileExists(absolutePath) == true {
+				sumValue := md5Checker(absolutePath)
+				fmt.Println(lstmd5, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := md5Checker(absolutePath)
 			fmt.Println(lstmd5, sumValue)
 			Verifer(sumValue)
@@ -256,30 +295,54 @@ func sha1MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha1, sha1Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha1Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha1, sha1Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha1Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha1, sha1Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha1Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			sumValue := sha1Checker(absolutePath)
-			fmt.Println(lstsha1, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha1Checker(absolutePath)
+				fmt.Println(lstsha1, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			sumValue := sha1Checker(absolutePath)
-			fmt.Println(lstsha1, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha1Checker(absolutePath)
+				fmt.Println(lstsha1, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha1Checker(absolutePath)
-			fmt.Println(lstsha1, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha1Checker(absolutePath)
+				fmt.Println(lstsha1, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -291,30 +354,54 @@ func sha224MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha224, sha224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha224, sha224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha224, sha224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			sumValue := sha224Checker(absolutePath)
-			fmt.Println(lstdot+"MD5:", sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha224Checker(absolutePath)
+				fmt.Println(lstsha224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			sumValue := sha224Checker(absolutePath)
-			fmt.Println(lstsha224, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha224Checker(absolutePath)
+				fmt.Println(lstsha224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha224Checker(absolutePath)
-			fmt.Println(lstsha224, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha224Checker(absolutePath)
+				fmt.Println(lstsha224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -326,30 +413,60 @@ func sha256MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha256, sha256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha256, sha256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha256, sha256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha256Checker(absolutePath)
+				fmt.Println(lstsha256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha256Checker(absolutePath)
 			fmt.Println(lstsha256, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha256Checker(absolutePath)
+				fmt.Println(lstsha256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha256Checker(absolutePath)
 			fmt.Println(lstsha256, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha256Checker(absolutePath)
-			fmt.Println(lstsha256, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha256Checker(absolutePath)
+				fmt.Println(lstsha256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -361,30 +478,60 @@ func sha384MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha384, sha384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha384, sha384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha384, sha384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstmd5, sha384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha384Checker(absolutePath)
+				fmt.Println(lstsha384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha384Checker(absolutePath)
 			fmt.Println(lstsha384, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha384Checker(absolutePath)
+				fmt.Println(lstsha384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha384Checker(absolutePath)
 			fmt.Println(lstsha384, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha384Checker(absolutePath)
-			fmt.Println(lstsha384, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha384Checker(absolutePath)
+				fmt.Println(lstsha384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -396,30 +543,60 @@ func sha512MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha512, sha512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512, sha512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha512, sha512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512, sha512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha512, sha512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512, sha512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha512Checker(absolutePath)
+				fmt.Println(lstsha512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512Checker(absolutePath)
 			fmt.Println(lstsha512, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha512Checker(absolutePath)
+				fmt.Println(lstsha512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512Checker(absolutePath)
 			fmt.Println(lstsha512, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha512Checker(absolutePath)
-			fmt.Println(lstsha512, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha512Checker(absolutePath)
+				fmt.Println(lstsha512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -431,30 +608,60 @@ func sha512224MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512224, sha512224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha512224Checker(absolutePath)
+				fmt.Println(lstsha512224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512224Checker(absolutePath)
 			fmt.Println(lstsha512224, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha512224Checker(absolutePath)
+				fmt.Println(lstsha512224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512224Checker(absolutePath)
 			fmt.Println(lstsha512224, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha512224Checker(absolutePath)
-			fmt.Println(lstsha512224, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha512224Checker(absolutePath)
+				fmt.Println(lstsha512224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -466,30 +673,62 @@ func sha512256MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512256, sha512256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			fmt.Println(lstsha512256, sha512256Checker(absolutePath))
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512256, sha512256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			fmt.Println(lstsha512256, sha512256Checker(absolutePath))
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha512256, sha512256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha512256, sha512256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha512256Checker(absolutePath)
+				fmt.Println(lstsha512256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512256Checker(absolutePath)
 			fmt.Println(lstsha512256, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha512256Checker(absolutePath)
+				fmt.Println(lstsha512256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha512256Checker(absolutePath)
 			fmt.Println(lstsha512256, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha512256Checker(absolutePath)
-			fmt.Println(lstsha512256, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha512256Checker(absolutePath)
+				fmt.Println(lstsha512256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -501,30 +740,60 @@ func sha3224MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3224, sha3224Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha3224Checker(absolutePath)
+				fmt.Println(lstsha3224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3224Checker(absolutePath)
 			fmt.Println(lstsha3224, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha3224Checker(absolutePath)
+				fmt.Println(lstsha3224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3224Checker(absolutePath)
 			fmt.Println(lstsha3224, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha3224Checker(absolutePath)
-			fmt.Println(lstsha3224, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha3224Checker(absolutePath)
+				fmt.Println(lstsha3224, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -536,30 +805,60 @@ func sha3256MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3256, sha3256Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha3256Checker(absolutePath)
+				fmt.Println(lstsha3256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3256Checker(absolutePath)
 			fmt.Println(lstsha3256, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha3256Checker(absolutePath)
+				fmt.Println(lstsha3256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3256Checker(absolutePath)
 			fmt.Println(lstsha3256, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha3256Checker(absolutePath)
-			fmt.Println(lstsha3256, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha3256Checker(absolutePath)
+				fmt.Println(lstsha3256, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -571,30 +870,60 @@ func sha3384MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3384, sha3384Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha3384Checker(absolutePath)
+				fmt.Println(lstsha3384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3384Checker(absolutePath)
 			fmt.Println(lstsha3384, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha3384Checker(absolutePath)
+				fmt.Println(lstsha3384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3384Checker(absolutePath)
 			fmt.Println(lstsha3384, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha3384Checker(absolutePath)
-			fmt.Println(lstsha3384, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha3384Checker(absolutePath)
+				fmt.Println(lstsha3384, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -606,30 +935,60 @@ func sha3512MainAct() {
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
-			fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
-			fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		} else {
 			absolutePath := workingDir() + filePath
-			fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			if fileExists(absolutePath) == true {
+				fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else if len(os.Args) == 4 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
+			if fileExists(absolutePath) == true {
+				sumValue := sha3512Checker(absolutePath)
+				fmt.Println(lstsha3512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3512Checker(absolutePath)
 			fmt.Println(lstsha3512, sumValue)
 			Verifer(sumValue)
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
+			if fileExists(absolutePath) == true {
+				sumValue := sha3512Checker(absolutePath)
+				fmt.Println(lstsha3512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 			sumValue := sha3512Checker(absolutePath)
 			fmt.Println(lstsha3512, sumValue)
 			Verifer(sumValue)
 		} else {
 			absolutePath := workingDir() + filePath
-			sumValue := sha3512Checker(absolutePath)
-			fmt.Println(lstsha3512, sumValue)
-			Verifer(sumValue)
+			if fileExists(absolutePath) == true {
+				sumValue := sha3512Checker(absolutePath)
+				fmt.Println(lstsha3512, sumValue)
+				Verifer(sumValue)
+			} else if fileExists(absolutePath) == false {
+				fmt.Println(wrongPath)
+			}
 		}
 	} else {
 		fmt.Println(wrongUsage)
@@ -650,6 +1009,7 @@ func main() {
 	sha3_256_Opt := flag.NewFlagSet("sha3256", flag.ExitOnError)
 	sha3_384_Opt := flag.NewFlagSet("sha3384", flag.ExitOnError)
 	sha3_512_Opt := flag.NewFlagSet("sha3512", flag.ExitOnError)
+	test_Opt := flag.NewFlagSet("test", flag.ExitOnError)
 	if len(os.Args) == 1 {
 		fmt.Println(wrongUsage)
 	} else {
@@ -693,6 +1053,41 @@ func main() {
 		case "sha3512", "sha3-512", "SHA3512", "SHA3-512", "3512", "3-512":
 			sha3_512_Opt.Parse(os.Args[1:])
 			sha3512MainAct()
+		case "test":
+			test_Opt.Parse(os.Args[1:])
+			filePath := args[2]
+			if len(os.Args) == 3 {
+				if filePath[0] == '/' {
+					absolutePath := filePath
+					//fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+					fmt.Println(fileExists(absolutePath))
+				} else if filePath[0] == '~' {
+					absolutePath := homeDir() + filePath[2:]
+					fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+				} else {
+					absolutePath := workingDir() + filePath
+					fmt.Println(lstsha3512, sha3512Checker(absolutePath))
+				}
+			} else if len(os.Args) == 4 {
+				if filePath[0] == '/' {
+					absolutePath := filePath
+					sumValue := sha3512Checker(absolutePath)
+					fmt.Println(lstsha3512, sumValue)
+					Verifer(sumValue)
+				} else if filePath[0] == '~' {
+					absolutePath := homeDir() + filePath[2:]
+					sumValue := sha3512Checker(absolutePath)
+					fmt.Println(lstsha3512, sumValue)
+					Verifer(sumValue)
+				} else {
+					absolutePath := workingDir() + filePath
+					sumValue := sha3512Checker(absolutePath)
+					fmt.Println(lstsha3512, sumValue)
+					Verifer(sumValue)
+				}
+			} else {
+				fmt.Println(wrongUsage)
+			}
 		default:
 			fmt.Println(wrongUsage)
 		}
