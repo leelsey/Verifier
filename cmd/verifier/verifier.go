@@ -1,13 +1,13 @@
 package main
 
 import (
-	"crypto"
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
 	"flag"
 	"fmt"
+	"golang.org/x/crypto/sha3"
 	"io"
 	"log"
 	"os"
@@ -178,7 +178,7 @@ func sha3224Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	checkSum := crypto.SHA3_224.New()
+	checkSum := sha3.New224()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
 	}
@@ -191,7 +191,7 @@ func sha3256Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	checkSum := crypto.SHA3_256.New()
+	checkSum := sha3.New256()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
 	}
@@ -204,7 +204,7 @@ func sha3384Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	checkSum := crypto.SHA3_384.New()
+	checkSum := sha3.New384()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
 	}
@@ -217,7 +217,7 @@ func sha3512Checker(absolutePath string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	checkSum := crypto.SHA3_512.New()
+	checkSum := sha3.New512()
 	if _, err := io.Copy(checkSum, fileLoc); err != nil {
 		log.Fatal(err)
 	}
