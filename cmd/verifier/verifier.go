@@ -14,26 +14,12 @@ import (
 )
 
 var (
-	appver     = "0.1"
+	appver     = "0.2"
 	lstdot     = " • "
-	args       = os.Args
 	wrongUsage = lstdot + "Usage: verifier <command> <file_path> <verify_code>.\n" +
 		lstdot + "It can use in <command> that one of Version, MD5, SHA1, " +
 		"SHA224, SHA256, SHA384, SHA512, SHA512/224, SHA512/256, SHA3-224, SHA3-256, SHA3-384, SHA-512."
-	wrongPath    = lstdot + "Sorry, can't find the file or this is a directory"
-	lstverify    = lstdot + "Verify: "
-	lstmd5       = lstdot + "MD5:"
-	lstsha1      = lstdot + "SHA1:"
-	lstsha224    = lstdot + "SHA224:"
-	lstsha256    = lstdot + "SHA256:"
-	lstsha384    = lstdot + "SHA384:"
-	lstsha512    = lstdot + "SHA512:"
-	lstsha512224 = lstdot + "SHA512/224:"
-	lstsha512256 = lstdot + "SHA512/256:"
-	lstsha3224   = lstdot + "SHA3-224:"
-	lstsha3256   = lstdot + "SHA3-256:"
-	lstsha3384   = lstdot + "SHA3-384:"
-	lstsha3512   = lstdot + "SHA3-512:"
+	wrongPath = lstdot + "Sorry, can't find the file or this is a directory"
 )
 
 func homeDir() string {
@@ -61,7 +47,8 @@ func fileExists(absolutePath string) bool {
 }
 
 func Verifer(sumValue string) {
-	verifyCode := args[3]
+	var lstverify = lstdot + "Verify: "
+	verifyCode := os.Args[3]
 	if verifyCode == sumValue {
 		fmt.Println(lstverify + "Correct")
 	} else {
@@ -226,7 +213,8 @@ func sha3512Checker(absolutePath string) string {
 }
 
 func md5MainAct() {
-	filePath := args[2]
+	var lstmd5 = lstdot + "MD5:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -291,26 +279,27 @@ func md5MainAct() {
 }
 
 func sha1MainAct() {
-	filePath := args[2]
+	var lstsha1 = lstdot + "SHA1:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha1Checker(absolutePath))
+				fmt.Println(lstsha1, sha1Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha1Checker(absolutePath))
+				fmt.Println(lstsha1, sha1Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else {
 			absolutePath := workingDir() + filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha1Checker(absolutePath))
+				fmt.Println(lstsha1, sha1Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
@@ -350,26 +339,27 @@ func sha1MainAct() {
 }
 
 func sha224MainAct() {
-	filePath := args[2]
+	var lstsha224 = lstdot + "SHA224:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha224Checker(absolutePath))
+				fmt.Println(lstsha224, sha224Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha224Checker(absolutePath))
+				fmt.Println(lstsha224, sha224Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else {
 			absolutePath := workingDir() + filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha224Checker(absolutePath))
+				fmt.Println(lstsha224, sha224Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
@@ -409,26 +399,27 @@ func sha224MainAct() {
 }
 
 func sha256MainAct() {
-	filePath := args[2]
+	var lstsha256 = lstdot + "SHA256:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha256Checker(absolutePath))
+				fmt.Println(lstsha256, sha256Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha256Checker(absolutePath))
+				fmt.Println(lstsha256, sha256Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else {
 			absolutePath := workingDir() + filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha256Checker(absolutePath))
+				fmt.Println(lstsha256, sha256Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
@@ -474,26 +465,27 @@ func sha256MainAct() {
 }
 
 func sha384MainAct() {
-	filePath := args[2]
+	var lstsha384 = lstdot + "SHA384:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha384Checker(absolutePath))
+				fmt.Println(lstsha384, sha384Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else if filePath[0] == '~' {
 			absolutePath := homeDir() + filePath[2:]
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha384Checker(absolutePath))
+				fmt.Println(lstsha384, sha384Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
 		} else {
 			absolutePath := workingDir() + filePath
 			if fileExists(absolutePath) == true {
-				fmt.Println(lstmd5, sha384Checker(absolutePath))
+				fmt.Println(lstsha384, sha384Checker(absolutePath))
 			} else if fileExists(absolutePath) == false {
 				fmt.Println(wrongPath)
 			}
@@ -539,7 +531,8 @@ func sha384MainAct() {
 }
 
 func sha512MainAct() {
-	filePath := args[2]
+	var lstsha512 = lstdot + "SHA512:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -604,7 +597,8 @@ func sha512MainAct() {
 }
 
 func sha512224MainAct() {
-	filePath := args[2]
+	var lstsha512224 = lstdot + "SHA512/224:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -669,7 +663,8 @@ func sha512224MainAct() {
 }
 
 func sha512256MainAct() {
-	filePath := args[2]
+	var lstsha512256 = lstdot + "SHA512/256:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -736,7 +731,8 @@ func sha512256MainAct() {
 }
 
 func sha3224MainAct() {
-	filePath := args[2]
+	var lstsha3224 = lstdot + "SHA3-224:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -801,7 +797,8 @@ func sha3224MainAct() {
 }
 
 func sha3256MainAct() {
-	filePath := args[2]
+	var lstsha3256 = lstdot + "SHA3-256:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -866,7 +863,8 @@ func sha3256MainAct() {
 }
 
 func sha3384MainAct() {
-	filePath := args[2]
+	var lstsha3384 = lstdot + "SHA3-384:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
@@ -931,7 +929,8 @@ func sha3384MainAct() {
 }
 
 func sha3512MainAct() {
-	filePath := args[2]
+	var lstsha3512 = lstdot + "SHA3-512:"
+	filePath := os.Args[2]
 	if len(os.Args) == 3 {
 		if filePath[0] == '/' {
 			absolutePath := filePath
